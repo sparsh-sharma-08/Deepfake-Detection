@@ -1,0 +1,25 @@
+*{
+    padding: 0;
+    margin: 0;
+    background-color: #DCD7C9;
+}
+
+.deepHead{
+    text-align: center;
+    margin-top: 5rem;
+    font-family: "Roboto Slab", serif;
+    font-weight: 500;
+}
+
+#uploadForm{
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    width: 100wh;
+}
+
+.cont{
+    width: 100vw;
+    height: 20rem;
+    background-color: red;
+}

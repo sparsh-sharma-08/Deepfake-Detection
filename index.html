@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deepfake Detection</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="cont">
+    <h1 class="deepHead">Deepfake Detection</h1>
+    <form id="uploadForm">
+        <input type="file" id="fileInput" name="file" accept="image/*">
+        <button type="submit">Upload and Predict</button>
+    </form>
+    <p id="predictionResult"></p>
+    </div>
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault(); // Prevent form submission
+
+            const fileInput = document.getElementById('fileInput');
+            const resultElement = document.getElementById('predictionResult');
+
+            if (fileInput.files.length === 0) {
+                resultElement.textContent = "Please select an image.";
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+
+            try {
+                const response = await fetch('http://127.0.0.1:5000/predict', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json();
+                resultElement.textContent = `Prediction: ${data.prediction}`;
+            } catch (error) {
+                resultElement.textContent = 'Error: ' + error.message;
+            }
+        });
+    </script>
+</body>
+</html>
